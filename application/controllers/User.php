@@ -18,7 +18,7 @@ class User extends CI_Controller
     }
     public function input_user()
     {
-        $data['title'] = 'e-Report';
+        $data['title'] = 'Insert Laporan';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
 

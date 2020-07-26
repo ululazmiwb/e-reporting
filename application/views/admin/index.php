@@ -6,7 +6,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-3">
+                <div class="col-12">
                     <!-- Default box -->
                     <!-- Profile Image -->
                     <h1> Ulul Azmi </h1>
