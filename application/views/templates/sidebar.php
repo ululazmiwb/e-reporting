@@ -25,53 +25,51 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Dashboard
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
+                <!-- Querry Menu -->
+
+                <?php
+                $role_id = $this->session->userdata('role_id');
+                $queryMenu = " SELECT `user_menu`.`id`,`menu`
+    FROM `user_menu` JOIN `user_access_menu` 
+    ON `user_menu`.`id` = `user_access_menu`.`menu_id`
+    WHERE `user_access_menu`.`role_id` = $role_id
+    ORDER BY`user_access_menu`.`menu_id` ASC";
+                $menu = $this->db->query($queryMenu)->result_array();
+                ?>
+
+                <!-- Heading -->
+                <!-- lOOPING MENU -->
+                <?php foreach ($menu as $m) : ?>
+                    <div class="sidebar-heading">
+                        <li class="nav-header"> <?= $m['menu']; ?></li>
+
+                        <!-- sub menu sesuai menu -->
+
+                        <?php
+                        $menuId = $m['id'];
+                        $querySubMenu = "SELECT *
+                FROM `user_sub_menu` JOIN `user_menu` 
+                ON `user_sub_menu`.`menu_id` = `user_menu`.`id`
+                WHERE `user_sub_menu`.`menu_id` = $menuId
+                AND `user_sub_menu`.`is_active` = 1 
+                ";
+                        $subMenu = $this->db->query($querySubMenu)->result_array();
+                        ?>
+                    </div>
+                    <?php foreach ($subMenu as $sm) : ?>
+                        <!-- Nav Item - Dashboard -->
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
-                            </a>
+                            <a class="nav-link" href="<?= $sm['url']; ?>">
+                                <i class="<?= $sm['icon']; ?>"></i>
+                                <span><?= $sm['title']; ?></span></a>
                         </li>
 
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="../widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Widgets
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li>
 
+                    <?php endforeach ?>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+                <?php endforeach; ?>
 
-                <li class="nav-header">REPORT</li>
-                <li class="nav-item">
-                    <a href="<?= base_url('user/input_user'); ?>" class="nav-link">
-                        <i class="nav-icon far fa-file-alt"></i>
-                        <p>
-                            Input Laporan
-                            <span class="badge badge-info right">2</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../gallery.html" class="nav-link">
-                        <i class="nav-icon fas fa-database"></i>
-                        <p>
-                            Daftar Laporan
-                        </p>
-                    </a>
-                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
