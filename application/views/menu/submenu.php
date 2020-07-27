@@ -15,11 +15,12 @@
                     <div class="card-header">
                         <h1> <?= $title; ?></h1>
                         <?php if (validation_errors()) : ?>
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-primary" role="alert">
                                 <?= validation_errors(); ?>
                             </div>
                         <?php endif; ?>
-                        <?= $this->session->flashdata('message'); ?>
+                        <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"> </div>
+
                         <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubMenuModal">Add New submenu</a>
 
                     </div>
@@ -52,7 +53,7 @@
                                         <td><?= $sm['is_active'] ?></td>
                                         <td>
                                             <a href="" class="badge badge-success" data-toggle="modal" data-target="#editSubMenuModal">Edit</a>
-                                            <a href="<?= base_url(); ?>menu/hapusDataSubmenu/<?= $sm['id'] ?>" class="badge badge-danger" onclick="return confirm('yakin?');">Delete</a>
+                                            <a href="<?= base_url(); ?>menu/hapusDataSubmenu/<?= $sm['id'] ?>" class="badge badge-danger tombol-hapus">Delete</a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>
